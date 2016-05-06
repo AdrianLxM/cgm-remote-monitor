@@ -87,9 +87,11 @@ describe('API_SECRET', function ( ) {
   it('should not work short', function ( ) {
     delete process.env.API_SECRET;
     process.env.API_SECRET = 'tooshort';
-    var env = require('../env')( );
-    should.not.exist(env.api_secret);
-    env.err.desc.should.startWith('API_SECRET should be at least');
+    var env;
+    (function ( ) {
+      env = require('../env')( );
+    }).should.throw( );
+    should.not.exist(env);
   });
 
   function ping_status (app, fn) {
